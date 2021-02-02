@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
-const config = require('../config/db.json');
+const { MYSQL } = require('../config/index');
 
 const sequelize = new Sequelize(
-  config.database,
-  config.dbUser,
-  config.dbPw,
+  MYSQL.DATABASE,
+  MYSQL.USERNAME,
+  MYSQL.PASSWORD,
   {
-    host: config.host,
-    dialect: config.dialect,
+    host: MYSQL.HOST,
+    dialect: MYSQL.Dialect,
     logging: (str) => {
     },
     timezone: '+09:00',
@@ -16,7 +16,7 @@ const sequelize = new Sequelize(
       min: 0,
       idle: 10000,
     },
-    port: config.port,
+    port: MYSQL.PORT,
   },
 );
 
