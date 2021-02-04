@@ -17,38 +17,40 @@ exports.login = async (req, res) => {
         code: 404,
         message: '유저를 찾을 수 없습니다',
       });
-
-      let dbPW = user.dataValues.pw;
-      let inputPw = body.pw;
-      let salt = user.dataValues.salt;
-      let hashPw = crypto.createHash('sha512').update(inputPw + salt).digest('hex');
-
-      const checkPw = await models.User.findOne({
-        where: {
-          id: body.id,
-          pw: hashPw,
-        },
-      });
-
-      if (!checkPw) {
-        return res.status(401).json({
-          code: 401,
-          message: '비밀번호를 확인하세요',
-        });
-
-        const jwt = await token.createToken(body.id);
-
-        console.log(body.id + " 로그인");
-
-        return res.status(200).json({
-          code: 200,
-          message: '로그인 성공',
-          data: {
-            'token': jwt
-          }
-        })
-      }
     }
+
+    let dbPW = checkId.dataValues.pw;
+    let inputPw = body.pw;
+    let salt = checkId.dataValues.salt;
+    let hashPw = crypto.createHash('sha512').update(inputPw + salt).digest('hex');
+
+    const checkPw = await models.User.findOne({
+      where: {
+        id: body.id,
+        pw: hashPw,
+      },
+    });
+
+    if (!checkPw) {
+      return res.status(401).json({
+        code: 401,
+        message: '비밀번호를 확인하세요',
+      });
+    }
+
+    const jwt = await token.createToken(body.id);
+
+    console.log(body.id + " 로그인");
+
+    return res.status(200).json({
+      code: 200,
+      message: '로그인 성공',
+      data: {
+        'token': jwt
+      }
+    })
+
+
   } catch (err) {
     console.log(err);
     return res.status(500).json({
