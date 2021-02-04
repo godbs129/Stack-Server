@@ -25,7 +25,7 @@ const Boarddb = require('./Board');
 
 module.exports = {
   User: Userdb(sequelize, Sequelize),
-  Board: Baorddb(sequelize, Sequelize),
+  Board: Boarddb(sequelize, Sequelize),
 }
 
 sequelize.sync().then(() => {
