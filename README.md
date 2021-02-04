@@ -1,2 +1,1 @@
-# SchoolManagement
-~~가칭~~
+# Stack
