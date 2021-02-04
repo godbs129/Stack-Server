@@ -21,7 +21,7 @@ const sequelize = new Sequelize(
 );
 
 const Userdb = require('./User');
-const Baorddb = require('./board');
+const Boarddb = require('./Board');
 
 module.exports = {
   User: Userdb(sequelize, Sequelize),
