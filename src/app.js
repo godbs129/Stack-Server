@@ -10,4 +10,8 @@ app.use(cors());
 
 app.use(api);
 
+app.get('/', (req, res) => {
+  res.send({ "message": "hello" });
+})
+
 module.exports = app;
