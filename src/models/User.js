@@ -35,5 +35,14 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
+  User.getMyScore = (id) => sequelize.query(`
+    SELECT score
+    FROM User
+    WHERE id = '${id}';
+  `, {
+    type: sequelize.QueryTypes.SELECT,
+    raw: true,
+  })
+
   return User;
 }
