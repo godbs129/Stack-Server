@@ -109,6 +109,11 @@ exports.modifyBoard = async (req, res) => {
       where: { idx: idx }
     });
 
+    return res.status(200).json({
+      code: 200,
+      message: '게시글 수정 성공'
+    });
+
   } catch (err) {
     console.log(err);
     return res.status(500).json({
@@ -118,8 +123,7 @@ exports.modifyBoard = async (req, res) => {
 }
 
 exports.deleteBoard = async (req, res) => {
-  //const { idx } = req.params;
-  const { body } = req;
+  const { idx } = req.params;
   const token = req.headers['authorization'];
 
   try {
@@ -127,7 +131,7 @@ exports.deleteBoard = async (req, res) => {
 
     const board = await models.Board.findOne({
       where: {
-        idx: body.idx,
+        idx: idx,
         userId: decoded.id,
       },
     });
@@ -139,11 +143,13 @@ exports.deleteBoard = async (req, res) => {
       });
     }
 
-    await models.Board.destroy({
-      where: {
-        idx: body.idx,
-      }
-    });
+    await models.Board.deleteBoard(idx);
+
+    return res.status(200).json({
+      code: 200,
+      message: '게시글 삭제 성공'
+    })
+
   } catch (err) {
     console.log(err);
     return res.status(500).json({
