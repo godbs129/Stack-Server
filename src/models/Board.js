@@ -32,5 +32,11 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
+  Board.deleteBoard = (idx) => Board.destroy({
+    where: {
+      idx,
+    }
+  })
+
   return Board;
 }
