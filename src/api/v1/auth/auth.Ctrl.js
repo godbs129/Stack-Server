@@ -71,7 +71,8 @@ exports.register = async (req, res) => {
     });
 
     if (user) {
-      return res.status(401).json({
+      return res.status(403).json({
+        code: 403,
         message: '이미 사용중인 아이디입니다.',
       });
     }
