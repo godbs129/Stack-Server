@@ -22,10 +22,12 @@ const sequelize = new Sequelize(
 
 const Userdb = require('./User');
 const Boarddb = require('./Board');
+const Scoredb = require('./Score');
 
 module.exports = {
   User: Userdb(sequelize, Sequelize),
   Board: Boarddb(sequelize, Sequelize),
+  Score: Scoredb(sequelize, Sequelize),
 }
 
 sequelize.sync().then(() => {
