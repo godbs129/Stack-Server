@@ -38,13 +38,6 @@ exports.readMyBoard = async (req, res) => {
       },
     });
 
-    if (!board) {
-      return res.status(404).json({
-        code: 404,
-        message: '작성된 글이 없습니다',
-      });
-    }
-
     return res.status(200).json({
       code: 200,
       message: '자신의 글 조회 성공',
