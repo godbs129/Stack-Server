@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Score.getMyScoreByType = (userId, type) => sequelize.query(`
-  SELECT score, reason
+  SELECT type, score, reason
   FROM Score
   WHERE userId = '${userId}' and type = '${type}';
   `, {
