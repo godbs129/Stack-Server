@@ -26,10 +26,12 @@ exports.getMyScore = async (req, res) => {
 
 exports.getMyScoreByType = async (req, res) => {
   const token = req.headers['authorization'];
-  const type = req.query;
+  const query = req.query.type;
 
   try {
     const decoded = await tokenLib.verifyToken(token);
+
+    const type = parseInt(query);
 
     const score = await models.Score.getMyScoreByType(decoded.id, type);
     console.log(score);
