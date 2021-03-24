@@ -32,13 +32,14 @@ exports.getMyScoreByType = async (req, res) => {
     const decoded = await tokenLib.verifyToken(token);
 
     const type = parseInt(query);
-
+    const user = await models.User.getUserNameAndNumber(decoded.id);
     const score = await models.Score.getMyScoreByType(decoded.id, type);
     console.log(score);
     res.status(200).json({
       code: 200,
       message: '자신의 점수 조회 성공',
       data: {
+        user,
         score,
       }
     });
