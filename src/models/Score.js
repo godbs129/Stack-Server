@@ -31,6 +31,12 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
         onDelete: 'cascade',
       }
+    },
+    createdAt: {
+      field: 'created_at',
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     }
   }, {
     tableName: 'score',
@@ -38,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Score.getMyScore = (userId) => sequelize.query(`
-    SELECT type, score, reason
+    SELECT type, score, reason, created_at
     FROM Score
     WHERE userId = '${userId}';
   `, {
@@ -47,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Score.getMyScoreByType = (userId, type) => sequelize.query(`
-  SELECT type, score, reason
+  SELECT type, score, reason, created_at
   FROM Score
   WHERE userId = '${userId}' and type = '${type}';
   `, {
