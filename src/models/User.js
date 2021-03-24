@@ -21,12 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    score: {
-      field: 'score',
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-    },
     salt: {
       type: DataTypes.STRING,
     },
@@ -34,6 +28,15 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'user',
     timestamps: false,
   });
+
+  User.getUserNameAndNumber = (userId) => sequelize.query(`
+  SELECT name, number
+  FROM User
+  WHERE id = '${userId}';
+  `, {
+    type: sequelize.QueryTypes.SELECT,
+    raw: true,
+  })
 
   return User;
 }
