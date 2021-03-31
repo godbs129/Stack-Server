@@ -101,3 +101,25 @@ exports.register = async (req, res) => {
     });
   }
 }
+
+exports.getUserRankByType = async (req, res) => {
+  const query = req.query.type;
+
+  try {
+    const type = parseInt(query);
+    const rank = await models.User.getUserRankByType(type);
+
+    res.status(200).json({
+      code: 200,
+      message: '점수 순위 조회 성공',
+      data: {
+        rank,
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: '서버 오류',
+    });
+  };
+}
