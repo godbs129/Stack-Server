@@ -22,16 +22,16 @@ const sequelize = new Sequelize(
 
 const Userdb = require('./User');
 const Boarddb = require('./Board');
-const Scoredb = require('./Score');
+const Pointdb = require('./Point');
 
 module.exports = {
   User: Userdb(sequelize, Sequelize),
   Board: Boarddb(sequelize, Sequelize),
-  Score: Scoredb(sequelize, Sequelize),
+  Point: Pointdb(sequelize, Sequelize),
 }
 
 sequelize.sync().then(() => {
   console.log('DB connected');
 }).catch((err) => {
   console.log(err.message);
-}) 
+})
