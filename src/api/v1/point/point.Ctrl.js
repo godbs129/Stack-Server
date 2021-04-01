@@ -7,7 +7,7 @@ exports.getMyScore = async (req, res) => {
   try {
     const decoded = await tokenLib.verifyToken(token);
 
-    const score = await models.Score.getMyScore(decoded.id);
+    const score = await models.Point.getMyPoint(decoded.id);
 
     res.status(200).json({
       code: 200,
@@ -33,8 +33,9 @@ exports.getMyScoreByType = async (req, res) => {
 
     const type = parseInt(query);
     const user = await models.User.getUserNameAndNumber(decoded.id);
-    const score = await models.Score.getMyScoreByType(decoded.id, type);
+    const score = await models.Point.getMyPointByType(decoded.id, type);
 
+    console.log(score);
     res.status(200).json({
       code: 200,
       message: '자신의 점수 조회 성공',
@@ -86,16 +87,16 @@ exports.givePoint = async (req, res) => {
 
     await models.Point.create({
       type: body.type,
-      point: body.point,
+      score: body.score,
       reason: body.reason,
       userId: body.userId,
       giver: checkId.name,
     });
 
     if (body.type == 0) {
-      await models.User.updateUserBonusPoint(decoded.id, body.point);
+      await models.User.updateUserBonusPoint(body.userId, body.score);
     } else if (body.type == 1) {
-      await models.User.updateUserMinusPoint(decoded.id);
+      await models.User.updateUserMinusPoint(body.userId, body.score);
     }
 
     res.status(200).json({
