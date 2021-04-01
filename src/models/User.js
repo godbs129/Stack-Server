@@ -65,9 +65,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.getUserRankMinusPoint = () => sequelize.query(`
-  SELECT name, bonus_point
+  SELECT name, minus_point
   FROM User
-  ORDER BY bonus_point DESC;
+  ORDER BY minus_point DESC;
   `, {
     type: sequelize.QueryTypes.SELECT,
     raw: true,
@@ -76,6 +76,15 @@ module.exports = (sequelize, DataTypes) => {
   User.updateUserBonusPoint = (userId, point) => sequelize.query(`
   UPDATE user
   SET bonus_point = bonus_point + ${point}
+  WHERE id = '${userId}'
+  `, {
+    type: sequelize.QueryTypes.UPDATE,
+    raw: true,
+  });
+
+  User.updateUserMinusPoint = (userId, point) => sequelize.query(`
+  UPDATE user
+  SET minus_point = minus_point + ${point}
   WHERE id = '${userId}'
   `, {
     type: sequelize.QueryTypes.UPDATE,
