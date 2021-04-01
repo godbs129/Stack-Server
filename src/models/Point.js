@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     point: {
-      field: 'score',
+      field: 'point',
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -29,7 +29,17 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'user',
         key: 'id',
-        onDelete: 'cascade',
+        onDelete: 'CASCADE',
+      }
+    },
+    giverId: {
+      field: 'giver_id',
+      type: DataTypes.STRING,
+      allowNull: true,
+      references: {
+        model: 'user',
+        key: 'id',
+        onDelete: 'SET NULL'
       }
     },
     createdAt: {
@@ -39,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     }
   }, {
-    tableName: 'score',
+    tableName: 'point',
     timestamps: false,
   });
 
@@ -70,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
   `, {
     type: sequelize.QueryTypes.SELECT,
     raw: true,
-  })
+  });
 
   return Point;
 }
