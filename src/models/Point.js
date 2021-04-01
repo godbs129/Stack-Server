@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    point: {
-      field: 'point',
+    score: {
+      field: 'score',
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -53,18 +53,18 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  Point.getMyScore = (userId) => sequelize.query(`
+  Point.getMyPoint = (userId) => sequelize.query(`
     SELECT type, score, reason, created_at
-    FROM Score
+    FROM point
     WHERE userId = '${userId}';
   `, {
     type: sequelize.QueryTypes.SELECT,
     raw: true,
   });
 
-  Point.getMyScoreByType = (userId, type) => sequelize.query(`
+  Point.getMyPointByType = (userId, type) => sequelize.query(`
   SELECT type, score, reason, created_at
-  FROM Score
+  FROM point
   WHERE userId = '${userId}' and type = '${type}';
   `, {
     type: sequelize.QueryTypes.SELECT,
@@ -72,11 +72,11 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Point.getUserRankingByType = (type) => sequelize.query(`
-  SELECT b.name, a.score
-  FROM Score AS a
+  SELECT b.name, a.point
+  FROM point AS a
   JOIN \`user\` AS b ON userId = b.id
   WHERE a.type = '${type}'
-  ORDER BY score DESC;
+  ORDER BY point DESC;
   `, {
     type: sequelize.QueryTypes.SELECT,
     raw: true,
