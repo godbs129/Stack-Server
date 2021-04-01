@@ -86,6 +86,7 @@ exports.register = async (req, res) => {
       pw: hashPw,
       name: body.name,
       number: body.number,
+      type: body.type,
       salt: salt,
     });
 
@@ -102,16 +103,32 @@ exports.register = async (req, res) => {
   }
 }
 
-exports.getUserRankByType = async (req, res) => {
-  const query = req.query.type;
-
+exports.getUserRankBonusPoint = async (req, res) => {
   try {
-    const type = parseInt(query);
-    const rank = await models.User.getUserRankByType(type);
+    const rank = await models.User.getUserRankBonusPoint();
 
     res.status(200).json({
       code: 200,
-      message: '점수 순위 조회 성공',
+      message: '상점 순위 조회 성공',
+      data: {
+        rank,
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: '서버 오류',
+    });
+  };
+}
+
+exports.getUserRankMinusPoint = async (req, res) => {
+  try {
+    const rank = await models.User.getUserRankMinusPoint();
+
+    res.status(200).json({
+      code: 200,
+      message: '벌점 순위 조회 성공',
       data: {
         rank,
       }
