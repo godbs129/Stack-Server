@@ -23,11 +23,13 @@ const sequelize = new Sequelize(
 const Userdb = require('./User');
 const Boarddb = require('./Board');
 const Pointdb = require('./Point');
+const Authdb = require('./Auth');
 
 module.exports = {
   User: Userdb(sequelize, Sequelize),
   Board: Boarddb(sequelize, Sequelize),
   Point: Pointdb(sequelize, Sequelize),
+  Auth: Authdb(sequelize, Sequelize),
 }
 
 sequelize.sync().then(() => {
