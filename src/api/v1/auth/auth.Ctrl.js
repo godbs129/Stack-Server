@@ -143,7 +143,7 @@ exports.getUserRankMinusPoint = async (req, res) => {
   };
 }
 
-exports.resetUserPassword = async (req, res) => {
+exports.emailAuthentication = async (req, res) => {
   const { email } = req.body;
   try {
     const user = await models.User.findOne({
