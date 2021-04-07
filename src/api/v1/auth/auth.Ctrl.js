@@ -143,6 +143,7 @@ exports.getUserRankMinusPoint = async (req, res) => {
   };
 }
 
+// 아직 미완성
 exports.emailAuthentication = async (req, res) => {
   const { email } = req.body;
   try {

@@ -7,6 +7,18 @@ exports.createBoard = async (req, res) => {
 
   try {
     const decoded = await tokenLib.verifyToken(token);
+    const checkId = await models.User.findOne({
+      where: {
+        id: decoded.id,
+      }
+    });
+
+    if (checkId.type == 0) {
+      return res.status(401).json({
+        code: 401,
+        message: '권한이 없습니다',
+      });
+    };
 
     await models.Board.create({
       title: body.title,
@@ -54,7 +66,7 @@ exports.readMyBoard = async (req, res) => {
   }
 }
 
-exports.readBoard = async (req, res) => {
+exports.readBoards = async (req, res) => {
   try {
     const board = await models.Board.findAll();
 
@@ -69,6 +81,34 @@ exports.readBoard = async (req, res) => {
     console.log(err);
     return res.status(500).json({
       message: '서버 오류',
+    });
+  }
+}
+
+exports.readBoard = async (req, res) => {
+  const { idx } = req.params;
+  try {
+    const board = await models.Board.findOne({
+      where: {
+        idx: idx,
+      },
+    });
+
+    if (!board) {
+      return res.status(404).json({
+        code: 404,
+        message: '존재하지 않는 게시글입니다',
+      });
+    }
+
+    return res.status(200).json({
+      code: 200,
+      message: '게시글 조회 성공'
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      mssage: "서버 오류"
     });
   }
 }
