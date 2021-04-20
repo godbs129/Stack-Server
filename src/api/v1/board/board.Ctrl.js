@@ -103,7 +103,8 @@ exports.readBoard = async (req, res) => {
 
     return res.status(200).json({
       code: 200,
-      message: '게시글 조회 성공'
+      message: '게시글 조회 성공',
+      board,
     });
   } catch (err) {
     console.log(err);
